@@ -4,10 +4,8 @@
         @if ($status === 'paused')
             <flux:button size="xs" variant="subtle" icon="play" wire:click="control('continue', '{{ $target }}', {{ Js::from($name) }})">Continue</flux:button>
         @else
-            <flux:button size="xs" variant="subtle" icon="pause" wire:click="control('pause', '{{ $target }}', {{ Js::from($name) }})"
-                wire:confirm="Pause {{ $name }}? Workers stop picking up new jobs.">Pause</flux:button>
+            <flux:button size="xs" variant="subtle" icon="pause" x-on:click="$dispatch('horizon-confirm', { message: {{ Js::from('Pause '.$name.'? Workers stop picking up new jobs.') }}, action: () => $wire.control('pause', '{{ $target }}', {{ Js::from($name) }}) })">Pause</flux:button>
         @endif
-        <flux:button size="xs" variant="subtle" icon="arrow-path" wire:click="control('restart', '{{ $target }}', {{ Js::from($name) }})"
-            wire:confirm="Restart the workers of {{ $name }}? Running jobs finish first.">Restart</flux:button>
+        <flux:button size="xs" variant="subtle" icon="arrow-path" x-on:click="$dispatch('horizon-confirm', { message: {{ Js::from('Restart the workers of '.$name.'? Running jobs finish first.') }}, action: () => $wire.control('restart', '{{ $target }}', {{ Js::from($name) }}) })">Restart</flux:button>
     </div>
 @endif

@@ -23,8 +23,8 @@
                         </flux:table.cell>
                         <flux:table.cell align="end">{{ number_format($item['count']) }}</flux:table.cell>
                         <flux:table.cell align="end">
-                            <flux:button size="xs" variant="subtle" icon="x-mark" wire:click="stopMonitoring({{ Js::from($item['tag']) }})"
-                                wire:confirm="Stop monitoring [{{ $item['tag'] }}]? Its stored jobs are deleted.">Stop</flux:button>
+                            <flux:button size="xs" variant="subtle" icon="x-mark"
+                                x-on:click="$dispatch('horizon-confirm', { message: {{ Js::from('Stop monitoring ['.$item['tag'].']? Its stored jobs are deleted.') }}, action: () => $wire.stopMonitoring({{ Js::from($item['tag']) }}) })">Stop</flux:button>
                         </flux:table.cell>
                     </flux:table.row>
                 @empty

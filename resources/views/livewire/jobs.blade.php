@@ -3,8 +3,8 @@
         <flux:heading size="xl">{{ ucfirst($type) }} Jobs</flux:heading>
         <flux:spacer />
         @if ($type === 'pending' && $queue !== '')
-            <flux:button size="sm" variant="danger" icon="trash" wire:click="clearQueue"
-                wire:confirm="Delete every job waiting in the [{{ $queue }}] queue?">Clear queue</flux:button>
+            <flux:button size="sm" variant="danger" icon="trash"
+                x-on:click="$dispatch('horizon-confirm', { message: {{ Js::from('Delete every job waiting in the ['.$queue.'] queue?') }}, action: () => $wire.clearQueue() })">Clear queue</flux:button>
         @endif
     </div>
 

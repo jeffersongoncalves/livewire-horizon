@@ -3,7 +3,7 @@
         <flux:heading size="xl" class="break-all">{{ $job->name }}</flux:heading>
         <flux:spacer />
         <flux:button size="sm" icon="arrow-path" wire:click="retry">Retry</flux:button>
-        <flux:button size="sm" variant="danger" icon="trash" wire:click="forget" wire:confirm="Delete this failed job?">Delete</flux:button>
+        <flux:button size="sm" variant="danger" icon="trash" x-on:click="$dispatch('horizon-confirm', { message: 'Delete this failed job?', action: () => $wire.forget() })">Delete</flux:button>
     </div>
 
     @include('livewire-horizon::partials.job-details')
