@@ -57,9 +57,12 @@
         {{ $slot }}
     </flux:main>
 
-    {{-- Shared confirmation for destructive actions: buttons dispatch horizon-confirm with the message and the $wire call to run. --}}
-    <div x-data="{ message: '', action: null }"
+    {{-- Shared confirmation for destructive actions: buttons dispatch horizon-confirm with the message and the $wire call to run.
+         The bar follows the confirmed call itself, so components that poll don't flash it. --}}
+    <div x-data="{ message: '', action: null, busy: false }"
         x-on:horizon-confirm.window="message = $event.detail.message; action = $event.detail.action; $flux.modal('horizon-confirm').show()">
+        @include('livewire-horizon::partials.loading', ['when' => 'busy'])
+
         <flux:modal name="horizon-confirm" class="md:w-96">
             <div class="space-y-6">
                 <flux:heading size="lg">Are you sure?</flux:heading>
@@ -69,7 +72,7 @@
                     <flux:modal.close>
                         <flux:button variant="ghost">Cancel</flux:button>
                     </flux:modal.close>
-                    <flux:button variant="danger" x-on:click="action(); $flux.modal('horizon-confirm').close()">Confirm</flux:button>
+                    <flux:button variant="danger" x-on:click="$flux.modal('horizon-confirm').close(); busy = true; Promise.resolve(action()).finally(() => busy = false)">Confirm</flux:button>
                 </div>
             </div>
         </flux:modal>
