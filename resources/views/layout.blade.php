@@ -37,11 +37,21 @@
 
         <flux:sidebar.spacer />
 
-        <flux:radio.group x-data variant="segmented" x-model="$flux.appearance" size="sm">
-            <flux:radio value="light" icon="sun" />
-            <flux:radio value="dark" icon="moon" />
-            <flux:radio value="system" icon="computer-desktop" />
-        </flux:radio.group>
+        {{-- One button each, like Horizon's header: the theme cycles light → dark → system, auto load toggles polling on every page. --}}
+        <div x-data class="flex gap-2">
+            <flux:button size="sm" square variant="subtle"
+                x-on:click="$flux.appearance = { light: 'dark', dark: 'system' }[$flux.appearance] ?? 'light'"
+                x-bind:title="'Theme: ' + $flux.appearance">
+                <flux:icon.sun variant="mini" x-show="$flux.appearance === 'light'" />
+                <flux:icon.moon variant="mini" x-show="$flux.appearance === 'dark'" />
+                <flux:icon.computer-desktop variant="mini" x-show="$flux.appearance === 'system'" />
+            </flux:button>
+            <flux:button size="sm" square variant="subtle" title="Auto load new entries"
+                x-on:click="$store.horizon.toggleAutoLoad()"
+                x-bind:class="$store.horizon.autoLoad && '!bg-accent !text-white'">
+                <flux:icon.arrow-path variant="mini" />
+            </flux:button>
+        </div>
     </flux:sidebar>
 
     <flux:header class="lg:hidden">
@@ -81,6 +91,23 @@
     @persist('toast')
         <flux:toast />
     @endpersist
+
+    {{-- Registered before Alpine starts; partials/auto-load reads it. On by default, remembered per browser. --}}
+    <script data-navigate-once{!! \Laravel\Horizon\Horizon::$nonceAttribute !!}>
+        document.addEventListener('alpine:init', () => {
+            const key = 'livewire-horizon.auto-load';
+            let saved = null;
+            try { saved = localStorage.getItem(key); } catch (e) {}
+
+            Alpine.store('horizon', {
+                autoLoad: saved !== '0',
+                toggleAutoLoad() {
+                    this.autoLoad = ! this.autoLoad;
+                    try { localStorage.setItem(key, this.autoLoad ? '1' : '0'); } catch (e) {}
+                },
+            });
+        });
+    </script>
 
     @livewireScripts
     @fluxScripts
