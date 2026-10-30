@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\Factory as QueueFactory;
 use Illuminate\Support\Facades\Bus;
 use JeffersonGoncalves\LivewireHorizon\Jobs\ProcessFailedJobs;
 use JeffersonGoncalves\LivewireHorizon\Livewire\Batch;
-use JeffersonGoncalves\LivewireHorizon\Livewire\Dashboard;
+use JeffersonGoncalves\LivewireHorizon\Livewire\Dashboard\Workload;
 use JeffersonGoncalves\LivewireHorizon\Livewire\FailedJob;
 use JeffersonGoncalves\LivewireHorizon\Livewire\FailedJobs;
 use JeffersonGoncalves\LivewireHorizon\Livewire\Jobs;
@@ -83,7 +83,7 @@ it('clears a queue on the connection of the supervisor working it', function () 
 
     fakeQueueConnection('redis-imports', 'imports', 7);
 
-    Livewire::test(Dashboard::class)->call('clearQueue', 'imports')->assertDispatched('toast-show');
+    Livewire::test(Workload::class)->call('clearQueue', 'imports')->assertDispatched('toast-show');
 });
 
 it('clears the filtered queue from the pending jobs page', function () {
@@ -93,7 +93,7 @@ it('clears the filtered queue from the pending jobs page', function () {
 });
 
 it('refuses to clear a combined workload row', function () {
-    Livewire::test(Dashboard::class)->call('clearQueue', 'default,mail')->assertStatus(422);
+    Livewire::test(Workload::class)->call('clearQueue', 'default,mail')->assertStatus(422);
 });
 
 it('stops monitoring a tag', function () {

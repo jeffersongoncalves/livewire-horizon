@@ -2,7 +2,9 @@
 
 use Illuminate\Support\Facades\Bus;
 use JeffersonGoncalves\LivewireHorizon\Jobs\ProcessFailedJobs;
-use JeffersonGoncalves\LivewireHorizon\Livewire\Dashboard;
+use JeffersonGoncalves\LivewireHorizon\Livewire\Dashboard\Stats;
+use JeffersonGoncalves\LivewireHorizon\Livewire\Dashboard\Supervisors;
+use JeffersonGoncalves\LivewireHorizon\Livewire\Dashboard\Workload;
 use JeffersonGoncalves\LivewireHorizon\Livewire\FailedJobs;
 use JeffersonGoncalves\LivewireHorizon\Livewire\Jobs;
 use JeffersonGoncalves\LivewireHorizon\Support\JobQuery;
@@ -86,9 +88,13 @@ it('pauses a master supervisor through the command queue', function () {
     $this->horizonMock(HorizonCommandQueue::class)
         ->shouldReceive('push')->with('master:web-1', Pause::class)->once();
 
-    Livewire::test(Dashboard::class)->call('control', 'pause', 'master', 'web-1');
+    Livewire::test(Supervisors::class)->call('control', 'pause', 'master', 'web-1');
 });
 
+it('refreshes each dashboard section on its own', function (string $component) {
+    Livewire::test($component)->assertSeeHtml('wire:poll.5s');
+})->with([Stats::class, Workload::class, Supervisors::class]);
+
 it('refuses unknown supervisor commands', function () {
-    Livewire::test(Dashboard::class)->call('control', 'terminate', 'master', 'web-1')->assertStatus(422);
+    Livewire::test(Supervisors::class)->call('control', 'terminate', 'master', 'web-1')->assertStatus(422);
 });

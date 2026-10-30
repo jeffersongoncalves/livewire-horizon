@@ -22,6 +22,9 @@ class LivewireHorizonServiceProvider extends PackageServiceProvider
     /** @var array<string, class-string> */
     public const COMPONENTS = [
         'dashboard' => Dashboard::class,
+        'dashboard.stats' => Dashboard\Stats::class,
+        'dashboard.workload' => Dashboard\Workload::class,
+        'dashboard.supervisors' => Dashboard\Supervisors::class,
         'monitoring' => Monitoring::class,
         'monitoring-tag' => MonitoringTag::class,
         'metrics' => Metrics::class,
