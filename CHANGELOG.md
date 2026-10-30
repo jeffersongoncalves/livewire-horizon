@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.2.0 - 2026-10-30
+
+### Changed
+
+- The dashboard is split into three Livewire components (stats, workload, supervisors), each refreshing on its own.
+- The loading bar only follows user interactions: on the dashboard it tracks the confirmed action, so the polling no longer shows it.
+
 ## 1.1.0 - 2026-10-30
 
 ### Added
