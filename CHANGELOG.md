@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## 2.3.0 - 2026-10-30
+
+### Added
+
+- "Auto load new entries" toggle in the sidebar, like Horizon's: turns automatic refresh on or off for every page. Remembered per browser, on by default. Background tabs don't refresh.
+
+### Changed
+
+- The theme switcher is a single button cycling light, dark and system.
+- Automatic refreshes no longer show the loading bar; it only follows user interactions.
+
 ## 2.2.0 - 2026-10-30
 
 ### Changed
