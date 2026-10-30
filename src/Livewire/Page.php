@@ -30,6 +30,12 @@ abstract class Page extends Component
         return view("livewire-horizon::livewire.{$view}", $data);
     }
 
+    /**
+     * Called by the auto-load timer (partials/auto-load): a named no-op that just
+     * re-renders, so wire:loading can tell it apart from what the user does.
+     */
+    public function autoLoad(): void {}
+
     protected function toast(string $message, string $variant = 'success'): void
     {
         app(FluxManager::class)->toast($message, variant: $variant);

@@ -132,5 +132,8 @@ it('renders the shared confirmation modal and the loading bar', function () {
     $this->get('livewire-horizon/failed')
         ->assertOk()
         ->assertSee('horizon-confirm', false)
-        ->assertSee('animate-horizon-progress', false);
+        ->assertSee('animate-horizon-progress', false)
+        ->assertSee('wire:target.except="autoLoad"', false)
+        ->assertSee('this.$wire.autoLoad()', false)
+        ->assertSee('$store.horizon.toggleAutoLoad()', false);
 });

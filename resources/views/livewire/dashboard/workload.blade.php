@@ -1,5 +1,6 @@
 {{-- Blaze folds Flux components at compile time: keep @if/@foreach out of their slots (use partials). --}}
-<div wire:poll.{{ config('livewire-horizon.poll', 5) }}s>
+<div>
+    @include('livewire-horizon::partials.auto-load')
     <flux:card class="space-y-4">
         <flux:heading size="lg">Current Workload</flux:heading>
 

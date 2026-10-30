@@ -1,4 +1,5 @@
 <div class="space-y-6">
+    @include('livewire-horizon::partials.auto-load')
     @include('livewire-horizon::partials.loading')
     <div class="flex items-center gap-3">
         <flux:heading size="xl">Monitoring</flux:heading>

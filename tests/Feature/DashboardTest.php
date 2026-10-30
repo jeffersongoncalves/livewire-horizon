@@ -92,7 +92,7 @@ it('pauses a master supervisor through the command queue', function () {
 });
 
 it('refreshes each dashboard section on its own', function (string $component) {
-    Livewire::test($component)->assertSeeHtml('wire:poll.5s');
+    Livewire::test($component)->assertSeeHtml('this.$wire.autoLoad()')->call('autoLoad')->assertOk();
 })->with([Stats::class, Workload::class, Supervisors::class]);
 
 it('refuses unknown supervisor commands', function () {

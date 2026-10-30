@@ -1,5 +1,6 @@
 {{-- Blaze folds Flux components at compile time: keep @if/@foreach out of their slots (use partials). --}}
-<div wire:poll.{{ config('livewire-horizon.poll', 5) }}s class="space-y-6">
+<div class="space-y-6">
+    @include('livewire-horizon::partials.auto-load')
     @foreach ($masters as $master)
         {{-- wire:key on a plain element: Livewire 4 rewrites it inside loops and breaks a component tag. --}}
         <div wire:key="master-{{ $master->name }}">

@@ -1,4 +1,5 @@
 <div class="space-y-6">
+    @include('livewire-horizon::partials.auto-load')
     <flux:heading size="xl" class="break-all">{{ $id }}</flux:heading>
 
     @foreach (['throughput' => 'Throughput (jobs per minute)', 'runtime' => 'Average runtime (seconds)'] as $field => $label)
