@@ -5,15 +5,15 @@
 
         @if (count($selected) > 0)
             <flux:button size="sm" icon="arrow-path" wire:click="retrySelected">Retry {{ count($selected) }} selected</flux:button>
-            <flux:button size="sm" variant="danger" icon="trash" wire:click="forgetSelected"
-                wire:confirm="Delete the {{ count($selected) }} selected failed jobs?">Delete selected</flux:button>
+            <flux:button size="sm" variant="danger" icon="trash"
+                x-on:click="$dispatch('horizon-confirm', { message: {{ Js::from('Delete the '.count($selected).' selected failed jobs?') }}, action: () => $wire.forgetSelected() })">Delete selected</flux:button>
         @else
-            <flux:button size="sm" icon="arrow-path" wire:click="retryAll" :disabled="$jobs->total() === 0"
-                wire:confirm="Retry all {{ number_format($jobs->total()) }} {{ $search !== '' || $queue !== '' ? 'matching ' : '' }}failed jobs?">
+            <flux:button size="sm" icon="arrow-path" :disabled="$jobs->total() === 0"
+                x-on:click="$dispatch('horizon-confirm', { message: {{ Js::from('Retry all '.number_format($jobs->total()).' '.($search !== '' || $queue !== '' ? 'matching ' : '').'failed jobs?') }}, action: () => $wire.retryAll() })">
                 Retry all{{ $search !== '' || $queue !== '' ? ' matching' : '' }}
             </flux:button>
-            <flux:button size="sm" variant="danger" icon="trash" wire:click="forgetAll" :disabled="$jobs->total() === 0"
-                wire:confirm="Delete all {{ number_format($jobs->total()) }} {{ $search !== '' || $queue !== '' ? 'matching ' : '' }}failed jobs? This cannot be undone.">
+            <flux:button size="sm" variant="danger" icon="trash" :disabled="$jobs->total() === 0"
+                x-on:click="$dispatch('horizon-confirm', { message: {{ Js::from('Delete all '.number_format($jobs->total()).' '.($search !== '' || $queue !== '' ? 'matching ' : '').'failed jobs? This cannot be undone.') }}, action: () => $wire.forgetAll() })">
                 Delete all{{ $search !== '' || $queue !== '' ? ' matching' : '' }}
             </flux:button>
         @endif
