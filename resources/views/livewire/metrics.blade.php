@@ -1,4 +1,5 @@
 <div class="space-y-6">
+    @include('livewire-horizon::partials.loading')
     <flux:heading size="xl">Metrics</flux:heading>
 
     <flux:card class="space-y-4">

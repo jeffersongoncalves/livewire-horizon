@@ -3,6 +3,7 @@
 namespace JeffersonGoncalves\LivewireHorizon\Livewire;
 
 use Illuminate\Contracts\View\View;
+use JeffersonGoncalves\LivewireHorizon\Jobs\ProcessFailedJobs;
 use JeffersonGoncalves\LivewireHorizon\Support\FailedJobActions;
 use JeffersonGoncalves\LivewireHorizon\Support\JobQuery;
 use JeffersonGoncalves\LivewireHorizon\Support\Queues;
@@ -58,9 +59,9 @@ class FailedJobs extends Page
      */
     public function retryAll(): void
     {
-        $count = FailedJobActions::retry($this->matchingIds());
+        dispatch(new ProcessFailedJobs('retry', trim($this->search), $this->queue));
 
-        $this->toast("{$count} jobs queued for retry.");
+        $this->toast('Retrying the failed jobs in the background.');
     }
 
     /**
@@ -68,22 +69,11 @@ class FailedJobs extends Page
      */
     public function forgetAll(): void
     {
-        $count = FailedJobActions::forget($this->matchingIds());
+        dispatch(new ProcessFailedJobs('forget', trim($this->search), $this->queue));
         $this->selected = [];
         $this->resetPage();
 
-        $this->toast("{$count} failed jobs deleted.");
-    }
-
-    /**
-     * @return array<int, string>
-     */
-    protected function matchingIds(): array
-    {
-        return app(JobQuery::class)
-            ->matching('failed', trim($this->search), $this->queue)
-            ->pluck('id')
-            ->all();
+        $this->toast('Deleting the failed jobs in the background. Refresh in a moment.');
     }
 
     public function render(): View

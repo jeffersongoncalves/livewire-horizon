@@ -44,13 +44,16 @@ class JobQuery
     /**
      * Raw jobs (payload still JSON) that match the search and queue.
      *
-     * ponytail: linear scan, Horizon has no index; capped by livewire-horizon.search_limit.
+     * ponytail: linear scan, Horizon has no index; a filtered scan is capped by
+     * livewire-horizon.search_limit, an unfiltered one returns every stored job.
      *
      * @return Collection<int, object>
      */
     public function matching(string $type, string $search = '', string $queue = ''): Collection
     {
-        $total = min($this->count($type), (int) config('livewire-horizon.search_limit', 5000));
+        $total = $search === '' && $queue === ''
+            ? $this->count($type)
+            : min($this->count($type), (int) config('livewire-horizon.search_limit', 5000));
         $matches = collect();
 
         for ($index = -1; $index + 1 < $total; $index += self::PER_PAGE) {

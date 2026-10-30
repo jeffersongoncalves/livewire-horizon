@@ -77,7 +77,8 @@ return [
 - Pages read Horizon's own repositories and reuse its controllers, so the numbers are the same ones Horizon shows.
 - Horizon keeps jobs in Redis without a search index, so search scans the stored jobs (newest first) up to `search_limit`. How many there are depends on your `horizon.trim` settings.
 - Pause, continue and restart go through Horizon's command queue in Redis, the same channel Horizon uses to talk to its supervisors. Unlike `horizon:pause`, which sends a Unix signal, this works when the web server and Horizon run on different servers or as different users. The command runs on the supervisor's next loop, within a few seconds.
-- Retry dispatches Horizon's `RetryFailedJob`; delete does what `horizon:forget` does.
+- Retry dispatches Horizon's `RetryFailedJob`; delete does what `horizon:forget` does. "Retry all" and "Delete all" run in a queued job, so thousands of jobs don't time out the request. Without a filter they cover every stored failed job, not just `search_limit`.
+- Clearing a queue uses the connection of the supervisor that works it in the current environment (`horizon.environments` merged with `horizon.defaults`).
 
 ## Testing
 

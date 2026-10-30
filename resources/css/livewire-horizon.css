@@ -28,6 +28,13 @@
     --color-accent: #7746ec;
     --color-accent-content: #7746ec;
     --color-accent-foreground: #ffffff;
+
+    --animate-horizon-progress: horizon-progress 1s ease-in-out infinite;
+
+    @keyframes horizon-progress {
+        from { transform: translateX(-100%); }
+        to { transform: translateX(300%); }
+    }
 }
 
 @layer theme {

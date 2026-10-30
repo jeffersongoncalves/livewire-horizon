@@ -1,5 +1,6 @@
 {{-- Blaze folds Flux components at compile time: keep @if/@foreach out of their slots (use partials). --}}
 <div wire:poll.{{ config('livewire-horizon.poll', 5) }}s class="space-y-6">
+    @include('livewire-horizon::partials.loading', ['target' => 'control, clearQueue'])
     <flux:heading size="xl">Overview</flux:heading>
 
     @include('livewire-horizon::partials.dashboard.stats')

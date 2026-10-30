@@ -28,6 +28,7 @@ class FailedJob extends Page
     {
         FailedJobActions::forget([$this->id]);
 
+        $this->toast('Failed job deleted.');
         $this->redirectRoute('livewire-horizon.failed', navigate: true);
     }
 
