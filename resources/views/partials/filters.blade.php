@@ -4,7 +4,8 @@
 
     <flux:select wire:model.live="queue" class="sm:max-w-56">
         <flux:select.option value="">All queues</flux:select.option>
-        @foreach ($queues as $name)
+        {{-- The selected queue may no longer be in the workload (or Horizon may be down). --}}
+        @foreach (collect($queues)->push($queue)->filter()->unique()->sort() as $name)
             <flux:select.option :value="$name">{{ $name }}</flux:select.option>
         @endforeach
     </flux:select>
