@@ -7,7 +7,7 @@
 # Livewire Horizon
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/jeffersongoncalves/livewire-horizon.svg?style=flat-square)](https://packagist.org/packages/jeffersongoncalves/livewire-horizon)
-[![Tests](https://img.shields.io/github/actions/workflow/status/jeffersongoncalves/livewire-horizon/tests.yml?branch=1.x&label=tests&style=flat-square)](https://github.com/jeffersongoncalves/livewire-horizon/actions?query=workflow%3ATests+branch%3A1.x)
+[![Tests](https://img.shields.io/github/actions/workflow/status/jeffersongoncalves/livewire-horizon/tests.yml?branch=2.x&label=tests&style=flat-square)](https://github.com/jeffersongoncalves/livewire-horizon/actions?query=workflow%3ATests+branch%3A2.x)
 [![Total Downloads](https://img.shields.io/packagist/dt/jeffersongoncalves/livewire-horizon.svg?style=flat-square)](https://packagist.org/packages/jeffersongoncalves/livewire-horizon)
 
 The [Laravel Horizon](https://laravel.com/docs/horizon) dashboard rewritten with Livewire and [Flux](https://fluxui.dev), in Horizon's own colors, plus the things the original dashboard is missing:
@@ -39,7 +39,7 @@ composer config http-basic.composer.fluxui.dev your-email your-license-key
 ## Installation
 
 ```bash
-composer require jeffersongoncalves/livewire-horizon:^1.0
+composer require jeffersongoncalves/livewire-horizon:^2.0
 ```
 
 Open `/livewire-horizon`. Horizon's own dashboard keeps working at `/horizon`.
