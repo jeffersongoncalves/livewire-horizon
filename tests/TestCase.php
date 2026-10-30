@@ -22,9 +22,17 @@ use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra
 {
+    /** Compiled views outlive a run; a stale one once hid a Blade compile error locally. */
+    protected static bool $viewsCleared = false;
+
     protected function setUp(): void
     {
         parent::setUp();
+
+        if (! static::$viewsCleared) {
+            $this->artisan('view:clear');
+            static::$viewsCleared = true;
+        }
 
         Horizon::auth(fn () => true);
 
