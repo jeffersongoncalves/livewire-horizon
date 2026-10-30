@@ -1,0 +1,39 @@
+@import 'tailwindcss' source(none);
+@import '../../vendor/livewire/flux/dist/flux.css';
+
+@source '../views';
+@source '../../vendor/livewire/flux/stubs';
+/* Only the Pro components the dashboard uses, the rest would bloat the inlined CSS. */
+@source '../../vendor/livewire/flux-pro/stubs/resources/views/flux/chart';
+@source '../../vendor/livewire/flux-pro/stubs/resources/views/flux/tab';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Horizon's palette: Figtree, its gray scale (Flux uses zinc) and #7746ec as accent. */
+@theme {
+    --font-sans: Figtree, ui-sans-serif, system-ui, sans-serif;
+
+    --color-zinc-50: #f9fafb;
+    --color-zinc-100: #f3f4f6;
+    --color-zinc-200: #e5e7eb;
+    --color-zinc-300: #d1d5db;
+    --color-zinc-400: #9ca3af;
+    --color-zinc-500: #6b7280;
+    --color-zinc-600: #4b5563;
+    --color-zinc-700: #374151;
+    --color-zinc-800: #1f2937;
+    --color-zinc-900: #111827;
+    --color-zinc-950: #030712;
+
+    --color-accent: #7746ec;
+    --color-accent-content: #7746ec;
+    --color-accent-foreground: #ffffff;
+}
+
+@layer theme {
+    .dark {
+        --color-accent: #7746ec;
+        --color-accent-content: #a78bfa;
+        --color-accent-foreground: #ffffff;
+    }
+}

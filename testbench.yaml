@@ -1,0 +1,23 @@
+laravel: '@testbench'
+
+providers:
+  - Livewire\LivewireServiceProvider
+  - Flux\FluxServiceProvider
+  - FluxPro\FluxProServiceProvider
+  - Laravel\Horizon\HorizonServiceProvider
+  - JeffersonGoncalves\LivewireHorizon\LivewireHorizonServiceProvider
+  - Workbench\App\Providers\WorkbenchServiceProvider
+
+env:
+  - APP_ENV=local
+  - APP_DEBUG=true
+  - QUEUE_CONNECTION=redis
+  - QUEUE_FAILED_DRIVER=null
+  - REDIS_CLIENT=phpredis
+  - REDIS_PREFIX=livewire_horizon_demo_
+  - 'HORIZON_PREFIX=livewire_horizon_demo:'
+  - CACHE_STORE=array
+  - SESSION_DRIVER=file
+
+workbench:
+  start: /livewire-horizon

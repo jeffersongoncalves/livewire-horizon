@@ -1,0 +1,11 @@
+{
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "build": "tailwindcss -i resources/css/livewire-horizon.css -o dist/livewire-horizon.css --minify"
+    },
+    "devDependencies": {
+        "@tailwindcss/cli": "^4.1.0",
+        "tailwindcss": "^4.1.0"
+    }
+}
