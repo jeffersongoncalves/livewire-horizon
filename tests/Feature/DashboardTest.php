@@ -1,9 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Bus;
+use JeffersonGoncalves\LivewireHorizon\Jobs\ProcessFailedJobs;
 use JeffersonGoncalves\LivewireHorizon\Livewire\Dashboard;
 use JeffersonGoncalves\LivewireHorizon\Livewire\FailedJobs;
 use JeffersonGoncalves\LivewireHorizon\Livewire\Jobs;
+use JeffersonGoncalves\LivewireHorizon\Support\JobQuery;
 use Laravel\Horizon\Contracts\HorizonCommandQueue;
 use Laravel\Horizon\Contracts\JobRepository;
 use Laravel\Horizon\Contracts\MasterSupervisorRepository;
@@ -74,9 +76,7 @@ it('deletes only the failed jobs matching the filter', function () {
     $jobs->shouldReceive('deleteFailed')->with('c')->once();
     $jobs->shouldNotReceive('deleteFailed')->with('b');
 
-    Livewire::test(FailedJobs::class)
-        ->set('queue', 'mail')
-        ->call('forgetAll');
+    (new ProcessFailedJobs('forget', filterQueue: 'mail'))->handle(app(JobQuery::class));
 });
 
 it('pauses a master supervisor through the command queue', function () {

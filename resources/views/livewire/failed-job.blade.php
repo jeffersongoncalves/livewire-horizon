@@ -1,4 +1,5 @@
 <div class="space-y-6">
+    @include('livewire-horizon::partials.loading')
     <div class="flex flex-wrap items-center gap-2">
         <flux:heading size="xl" class="break-all">{{ $job->name }}</flux:heading>
         <flux:spacer />
